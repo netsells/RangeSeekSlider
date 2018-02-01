@@ -130,6 +130,12 @@ import UIKit
 
     /// Handle slider with custom color, you can set custom color for your handle
     @IBInspectable open var handleColor: UIColor?
+    
+    /// Handle slider with custom color, you can set custom color for your handle
+    @IBInspectable open var leftHandleColor: UIColor?
+    
+    /// Handle slider with custom color, you can set custom color for your handle
+    @IBInspectable open var rightHandleColor: UIColor?
 
     /// Handle slider with custom border color, you can set custom border color for your handle
     @IBInspectable open var handleBorderColor: UIColor?
@@ -228,7 +234,7 @@ import UIKit
     private var handleTracking: HandleTracking = .none
 
     private let sliderLine: CALayer = CALayer()
-    private let sliderLineBetweenHandles: CALayer = CALayer()
+    open var sliderLineBetweenHandles: CALayer = CALayer()
 
     private let leftHandle: CALayer = CALayer()
     private let rightHandle: CALayer = CALayer()
@@ -517,15 +523,21 @@ import UIKit
             sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor ?? tintCGColor
             sliderLine.backgroundColor = tintCGColor
 
-            let color: CGColor
+            let leftColor: CGColor
             if let _ = handleImage {
-                color = UIColor.clear.cgColor
+                leftColor = UIColor.clear.cgColor
             } else {
-                color = handleColor?.cgColor ?? tintCGColor
+                leftColor = leftHandleColor?.cgColor ?? handleColor?.cgColor ?? tintCGColor
             }
-            leftHandle.backgroundColor = color
+            let rightColor: CGColor
+            if let _ = handleImage {
+                rightColor = UIColor.clear.cgColor
+            } else {
+                rightColor = rightHandleColor?.cgColor ?? handleColor?.cgColor ?? tintCGColor
+            }
+            leftHandle.backgroundColor = leftColor
             leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
-            rightHandle.backgroundColor = color
+            rightHandle.backgroundColor = rightColor
             rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
